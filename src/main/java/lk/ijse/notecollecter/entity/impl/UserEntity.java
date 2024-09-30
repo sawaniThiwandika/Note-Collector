@@ -8,8 +8,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Data
 @Entity
 @Table(name="user")
@@ -21,6 +19,7 @@ public class UserEntity implements SuperEntity {
     @Column(unique = true)
     private String email;
     private String password;
+    @Column(columnDefinition = "LONGTEXT")
     private String profilePic;
     @OneToMany(mappedBy ="user")
     private List<NoteEntity> notes;

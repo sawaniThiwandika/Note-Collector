@@ -6,6 +6,10 @@ import lk.ijse.notecollecter.dto.impl.UserDTO;
 import java.util.List;
 
 public interface UserServise {
-    public NoteDto saveUser(UserDTO dto);
+    public UserDTO saveUser(UserDTO dto);
+    public boolean updateUser(String userID,UserDTO dto);
+    public boolean deleteUser(String id);
+    public UserDTO getUser(String id);
+    public List<UserDTO> getUserList();
 
 }

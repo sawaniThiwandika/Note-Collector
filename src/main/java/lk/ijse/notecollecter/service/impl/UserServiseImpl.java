@@ -1,14 +1,70 @@
 package lk.ijse.notecollecter.service.impl;
 
+import jakarta.transaction.Transactional;
+import lk.ijse.notecollecter.dao.UserDao;
 import lk.ijse.notecollecter.dto.impl.NoteDto;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
+import lk.ijse.notecollecter.entity.impl.UserEntity;
 import lk.ijse.notecollecter.service.UserServise;
+import lk.ijse.notecollecter.util.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
+@Transactional
+// meta annotate wela thiynw component annotate eken e nisa api methana @componenet annotaion eka wenama use krnn oni ne
 public class UserServiseImpl implements UserServise {
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private Mapping mapping;
     @Override
-    public NoteDto saveUser(UserDTO dto) {
-        return null;
+    public UserDTO saveUser(UserDTO dto) {
+        return mapping.toUserDto( userDao.save(mapping.toUserEntity(dto)));
     }
+
+    @Override
+    public boolean updateUser(String userID, UserDTO dto) {
+
+        Optional<UserEntity> tmpUser = userDao.findById(userID);
+        if (tmpUser.isPresent()){
+            tmpUser.get().setFirstName(dto.getFirstName());
+            tmpUser.get().setLastName(dto.getLastName());
+            tmpUser.get().setPassword(dto.getPassword());
+            tmpUser.get().setEmail(dto.getEmail());
+            tmpUser.get().setProfilePic(dto.getProfilePic());
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteUser(String id) {
+        userDao.deleteById(id);
+        return false;
+    }
+
+    @Override
+    public UserDTO getUser(String id) {
+     return mapping.toUserDto(userDao.getReferenceById(id));
+
+
+    }
+
+    @Override
+    public List<UserDTO> getUserList() {
+      List<UserEntity> all = userDao.findAll();
+        List<UserDTO> dtoList = new ArrayList<>();
+        for (UserEntity entity:all
+             ) {
+            dtoList.add(mapping.toUserDto(entity));
+        }
+        return dtoList;
+    }
+
 }
