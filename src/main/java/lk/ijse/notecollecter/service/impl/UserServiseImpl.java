@@ -5,6 +5,7 @@ import lk.ijse.notecollecter.dao.UserDao;
 import lk.ijse.notecollecter.dto.impl.NoteDto;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
 import lk.ijse.notecollecter.entity.impl.UserEntity;
+import lk.ijse.notecollecter.exception.UserNotFoundException;
 import lk.ijse.notecollecter.service.UserServise;
 import lk.ijse.notecollecter.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,18 @@ public class UserServiseImpl implements UserServise {
 
     @Override
     public boolean deleteUser(String id) {
-        userDao.deleteById(id);
-        return false;
+
+        Optional<UserEntity> existUser = userDao.findById(id);
+        if (!existUser.isPresent()){
+           throw new UserNotFoundException();
+
+        }
+        else {
+            userDao.deleteById(id);
+            return true;
+        }
+
+
     }
 
     @Override
