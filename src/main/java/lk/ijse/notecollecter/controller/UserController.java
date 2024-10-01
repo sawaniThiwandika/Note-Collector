@@ -49,6 +49,7 @@ public class UserController {
             buildUserDTO.setEmail(userEmail);
             buildUserDTO.setPassword(userPassword);
             buildUserDTO.setProfilePic(base64ProPic);
+            user.saveUser(buildUserDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
             // return user.saveUser(buildUserDTO);
         } catch (DataPersistException e) {

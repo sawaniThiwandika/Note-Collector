@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lk.ijse.notecollecter.dto.SuperDTO;
+import lk.ijse.notecollecter.dto.UserStatus;
 import lombok.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 
 
-public class UserDTO implements SuperDTO {
+public class UserDTO implements UserStatus {
     private String userId;
     private String firstName;
     private String lastName;

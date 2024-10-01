@@ -4,6 +4,6 @@ import lk.ijse.notecollecter.entity.SuperEntity;
 
 import java.io.Serializable;
 
-public interface UserStatus  extends SuperDTO, Serializable {
+public interface UserStatus extends SuperDTO, Serializable {
 
 }
